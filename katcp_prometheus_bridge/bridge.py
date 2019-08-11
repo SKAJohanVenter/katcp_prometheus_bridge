@@ -22,7 +22,7 @@ STRING_ADDRESS_TYPES = ['string', 'address']
 @dataclass
 class SensorMetric:
     """SensorMetric class formats a `aiokatcp.sensor.Sensor` into a Prometheus
-       compatible metric.
+       compatible metric (Gauge).
 
        If `WORKAROUND_STRING_ADDRESS`, is enabled a list of sensor values for
        katcp types `address` and `string` is stored (as they are received) and the index
@@ -35,7 +35,7 @@ class SensorMetric:
 
     def __post_init__(self) -> None:
         """If the `aiokatcp.sensor.Sensor` is `enum` then the options are stored. The
-           list is also the the `HELP` string.
+           list is also displayed in the `HELP` string.
 
         Returns
         -------
@@ -49,7 +49,7 @@ class SensorMetric:
 
     @property
     def metric_name(self) -> str:
-        """Updates sensor name to a Promtheus valid value.
+        """Updates sensor name to a valid Prometheus name.
 
         Returns
         -------
@@ -72,7 +72,7 @@ class SensorMetric:
 
     @property
     def metric_value(self) -> Union[int, float]:
-        """Returns the sensort value as a valid Prometheus entry.
+        """Returns the sensor value as a valid Prometheus entry.
 
         Returns
         -------
@@ -95,7 +95,7 @@ class Watcher(aiokatcp.SensorWatcher):
     Parameters
     ----------
     aiokatcp : aiokatcp.Client
-        A instance of `aiokatcp.Client`
+        An instance of `aiokatcp.Client`
 
     logger : logging.Logger
         A configured logger
