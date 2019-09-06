@@ -24,8 +24,10 @@ jobs:
       run: |
         if tox ; then
           anybadge --label=pipeline --value=passing --file=pipeline.svg passing=green failing=red
+          exit 0
         else
           anybadge --label=pipeline --value=failing --file=pipeline.svg passing=green failing=red
+          exit 1
         fi
         anybadge --value=`coverage report -m | grep TOTAL | tr -s ' ' | cut -d ' ' -f 4 | sed 's/%//'` --file=coverage.svg coverage
         
