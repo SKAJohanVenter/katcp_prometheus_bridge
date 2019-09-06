@@ -16,4 +16,6 @@ jobs:
         echo Add other actions to build,
         echo test, and deploy your project.
     - name: test
-      run: which python3.7
+      run: |
+        sudo apt update
+        sudo apt install python3-pip
