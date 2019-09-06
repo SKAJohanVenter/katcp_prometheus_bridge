@@ -1,0 +1,22 @@
+name: Tox Test
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Tox Test
+      run: |
+        sudo apt update
+        sudo apt-get install python3-setuptools
+        sudo apt-get install python3-pip
+        sudo pip3 install tox
+        sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install python3.7
+        tox
+        
+        
