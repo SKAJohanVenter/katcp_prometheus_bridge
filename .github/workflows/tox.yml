@@ -1,4 +1,4 @@
-name: Tox Test
+name: tox_test
 
 on: [push]
 
@@ -10,13 +10,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Tox Test
+    - name: Setup
       run: |
         sudo apt update
         sudo apt-get install python3-setuptools
         sudo apt-get install python3-pip
         sudo pip3 install tox
+        sudo pip3 install anybadge
         sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install python3.7
-        tox
+
+    - name: Tox
+      run: |
+        if tox ; then
+          anybadge.py --label=pipeline --value=passing --file=pipeline.svg passing=green failing=red
+        else
+          anybadge.py --label=pipeline --value=failing --file=pipeline.svg passing=green failing=red
+        fi
+        anybadge --value=`coverage report -m | grep TOTAL | tr -s ' ' | cut -d ' ' -f 4 | sed 's/%//'` --file=coverage.svg coverage
         
         
